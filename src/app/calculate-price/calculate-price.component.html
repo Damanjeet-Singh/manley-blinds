@@ -1,0 +1,43 @@
+<mat-card class="example-card">
+  <mat-card-header>
+    <!-- <mat-card-subtitle>Dog Breed</mat-card-subtitle> -->
+    <mat-card-title>Calculate Price</mat-card-title>
+  </mat-card-header>
+  <form [formGroup]="priceCalculatorForm" class="example-form" (ngSubmit)="onSubmit()">
+  <mat-card-content>
+        <mat-form-field class="example-full-width">
+          <mat-label>Width</mat-label>
+          <input type="number" matInput formControlName="width" [min]="minWidth" [max]="maxWidth">
+            @if(priceCalculatorForm.controls.width.hasError('required')) {
+              <mat-error>Width is required</mat-error>
+            }
+            @if(!priceCalculatorForm.controls.width.hasError('required') && priceCalculatorForm.controls.width.hasError('min')) {
+              <mat-error>Width cannot be less than {{minWidth}}</mat-error>
+            }
+            @if(!priceCalculatorForm.controls.width.hasError('required') && priceCalculatorForm.controls.width.hasError('max')) {
+              <mat-error>Drop cannot be more than {{maxWidth}}</mat-error>
+            }
+        </mat-form-field>
+        <mat-form-field class="example-full-width">
+          <mat-label>Drop</mat-label>
+          <input type="number" matInput formControlName="drop" [min]="minDrop" [max]="maxDrop">
+          @if(priceCalculatorForm.controls.drop.hasError('required')) {
+            <mat-error>Drop is required</mat-error>
+          }
+          @if(!priceCalculatorForm.controls.drop.hasError('required') && priceCalculatorForm.controls.drop.hasError('min')) {
+            <mat-error>Drop cannot be less than {{minDrop}}</mat-error>
+          }
+          @if(!priceCalculatorForm.controls.drop.hasError('required') && priceCalculatorForm.controls.drop.hasError('max')) {
+            <mat-error>Drop cannot be more than {{maxDrop}}</mat-error>
+          }
+        </mat-form-field>
+    <mat-divider></mat-divider>
+  </mat-card-content>
+  <mat-card-actions>
+    <button mat-raised-button color="primary" type="submit" [disabled]="priceCalculatorForm.invalid">Calculate</button>
+  </mat-card-actions>
+</form>
+</mat-card>
+@if(calculatedPrice) {
+    <h3>Price: {{ calculatedPrice | currency:'INR' }}</h3>
+}
